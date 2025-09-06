@@ -1,0 +1,251 @@
+/* CSS Variables: Light / Dark theme */
+:root {
+  --bg: #f7f7f9;
+  --fg: #1f2937;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --danger: #e11d48;
+  --danger-contrast: #ffffff;
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --fg: #e5e7eb;
+  --muted: #9ca3af;
+  --card: #111827;
+  --border: #1f2937;
+  --accent: #60a5fa;
+  --accent-contrast: #0b1220;
+  --danger: #fb7185;
+  --danger-contrast: #0b1220;
+  --shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* Base layout */
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-weight: 700;
+}
+.links a {
+  margin-right: 0.75rem;
+  text-decoration: none;
+  color: var(--fg);
+}
+.links a:hover {
+  opacity: 0.8;
+}
+
+/* Theme switch (pure CSS toggle) */
+.theme {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  display: inline-block;
+}
+.switch input {
+  display: none;
+}
+.slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 999px;
+  transition: 0.2s;
+}
+.switch input:checked + .slider {
+  background: var(--accent);
+}
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  top: 3px;
+  border-radius: 50%;
+  background: var(--card);
+  transition: 0.2s;
+  box-shadow: var(--shadow);
+}
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+.theme-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Container */
+.container {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.2rem;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--border);
+  margin-bottom: 1rem;
+}
+.card-header h2 {
+  margin: 0.2rem 0;
+}
+
+/* Buttons */
+.btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  padding: 0.55rem 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  opacity: 0.95;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: var(--accent);
+}
+.btn.danger {
+  background: var(--danger);
+  color: var(--danger-contrast);
+}
+.btn.outline {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+.btn.danger.outline {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn.small {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+/* Lists */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 0.9rem;
+  margin-bottom: 0.7rem;
+  background: var(--card);
+}
+.list-item:hover {
+  background: color-mix(in srgb, var(--card) 85%, var(--border) 15%);
+}
+
+.recipe-name {
+  font-weight: 600;
+}
+
+/* Dynamic row styling using data-index (alternating background) */
+.list-item[data-index]:nth-child(even) {
+  background: color-mix(in srgb, var(--card) 92%, var(--border) 8%);
+}
+
+/* Form */
+.form {
+  display: grid;
+  gap: 0.6rem;
+}
+.form label {
+  font-weight: 600;
+}
+.form input {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--card);
+  color: var(--fg);
+}
+.form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* Dynamic CSS based on validity */
+.form input.invalid {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent);
+  background: color-mix(in srgb, var(--danger) 6%, var(--card) 94%);
+}
+
+.help {
+  min-height: 20px;
+}
+.error {
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+.muted {
+  color: var(--muted);
+}
+
+.actions {
+  margin-top: 0.3rem;
+}
